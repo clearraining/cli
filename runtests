@@ -2,6 +2,7 @@
 from __future__ import print_function, unicode_literals
 
 import argparse
+import codecs
 import glob
 import os
 import platform
@@ -133,9 +134,9 @@ def _run(command):
 
 
 def _gfmrun_count():
-    with open('README.md') as infile:
-        lines = infile.read().decode('utf-8').splitlines()
-        return len(filter(_is_go_runnable, lines))
+    with codecs.open('README.md', 'r', 'utf-8') as infile:
+        lines = infile.read().splitlines()
+        return len(list(filter(_is_go_runnable, lines)))
 
 
 def _is_go_runnable(line):
@@ -153,7 +154,7 @@ def _combine_coverprofiles(coverprofiles):
     combined.write(b'mode: set\n')
 
     for coverprofile in coverprofiles:
-        with open(coverprofile, 'r') as infile:
+        with codecs.open(coverprofile, 'r', 'utf-8') as infile:
             for line in infile.readlines():
                 if not line.startswith('mode: '):
                     combined.write(line.encode('utf-8'))
