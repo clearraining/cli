@@ -134,7 +134,7 @@ def _run(command):
 
 def _gfmrun_count():
     with open('README.md') as infile:
-        lines = infile.read().splitlines()
+        lines = infile.read().decode('utf-8').splitlines()
         return len(filter(_is_go_runnable, lines))
 
 
